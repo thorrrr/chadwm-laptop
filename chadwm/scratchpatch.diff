@@ -1,0 +1,137 @@
+diff --git a/chadwm/config.def.h b/chadwm/config.def.h
+index fe4adf8..f324393 100644
+--- a/chadwm/config.def.h
++++ b/chadwm/config.def.h
+@@ -102,6 +102,19 @@ static const unsigned int ulinestroke   = 2; /* thickness / height of the underl
+ static const unsigned int ulinevoffset  = 0; /* how far above the bottom of the bar the line should appear */
+ static const int ulineall               = 0; /* 1 to show underline on all tags, 0 for just the active ones */
+ 
++/* PATCH: scratchpads */
++
++typedef struct { const char *name; const void *cmd; } Sp;
++const char *spcmd1[] = {"st", "-n", "sp-htop", "-g", "144x41", "-e", "htop",   NULL };
++const char *spcmd2[] = {"st", "-n", "sp-fm",   "-g", "144x41", "-e", "ranger", NULL };
++static Sp scratchpads[] = {
++    /* name          cmd  */
++    {"sp-htop",     spcmd1},
++    {"sp-fm",       spcmd2},
++};
++
++/* END PATCH: scratchpads */
++
+ static const Rule rules[] = {
+     /* xprop(1):
+      *	WM_CLASS(STRING) = instance, class
+@@ -112,6 +125,12 @@ static const Rule rules[] = {
+     { "Firefox",  NULL,       NULL,       1 << 8,       0,           0,           -1 },
+     { "eww",      NULL,       NULL,       0,            0,           1,           -1 },
+     { "mintstick", NULL,      NULL,       0,            0,           0,           -1 },
++
++/* PATCH: scratchpads */
++    { NULL,       "sp-htop",  NULL,       SPTAG(0),     0,           1,           -1 },
++    { NULL,       "sp-fm",    NULL,       SPTAG(1),     0,           1,           -1 },
++/* END PATCH: scratchpads */
++
+ };
+ 
+ /* layout(s) */
+@@ -272,6 +291,11 @@ static const Key keys[] = {
+     TAGKEYS(                            XK_9,                       8)
+ 
+  
++/* PATCH: scratchpads */
++    { MODKEY,                           XK_y,      togglescratch,  {.ui = 0 } },
++     { MODKEY|ShiftMask,                XK_y,      togglescratch,  {.ui = 1 } },
++/* END PATCH: scratchpads */
++
+ };
+ 
+ /* button definitions */
+diff --git a/chadwm/dwm.c b/chadwm/dwm.c
+index 86eec78..435047e 100644
+--- a/chadwm/dwm.c
++++ b/chadwm/dwm.c
+@@ -64,7 +64,11 @@
+ #define MOUSEMASK (BUTTONMASK | PointerMotionMask)
+ #define WIDTH(X) ((X)->w + 2 * (X)->bw)
+ #define HEIGHT(X) ((X)->h + 2 * (X)->bw)
+-#define TAGMASK ((1 << LENGTH(tags)) - 1)
++#define NUMTAGS					(LENGTH(tags) + LENGTH(scratchpads))
++#define TAGMASK     			((1 << NUMTAGS) - 1)
++#define SPTAG(i) 				((1 << LENGTH(tags)) << (i))
++#define SPTAGMASK   			(((1 << LENGTH(scratchpads))-1) << LENGTH(tags))
++#define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
+ #define TAGSLENGTH              (LENGTH(tags))
+ #define TEXTW(X) (drw_fontset_getwidth(drw, (X)) + lrpad)
+ #define MAXTABS 50
+@@ -335,6 +339,7 @@ static void tag(const Arg *arg);
+ static void tagmon(const Arg *arg);
+ static void togglebar(const Arg *arg);
+ static void togglefloating(const Arg *arg);
++static void togglescratch(const Arg *arg);
+ static void togglefullscr(const Arg *arg);
+ static void toggletag(const Arg *arg);
+ static void toggleview(const Arg *arg);
+@@ -490,6 +495,11 @@ void applyrules(Client *c) {
+       c->iscentered = r->iscentered;
+       c->isfloating = r->isfloating;
+       c->tags |= r->tags;
++      if ((r->tags & SPTAGMASK) && r->isfloating) {
++          c->x = c->mon->wx + (c->mon->ww / 2 - WIDTH(c) / 2);
++          c->y = c->mon->wy + (c->mon->wh / 2 - HEIGHT(c) / 2);
++      }
++
+       for (m = mons; m && m->num != r->monitor; m = m->next)
+         ;
+       if (m)
+@@ -501,7 +511,7 @@ void applyrules(Client *c) {
+   if (ch.res_name)
+     XFree(ch.res_name);
+   c->tags =
+-      c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
++      c->tags & TAGMASK ? c->tags & TAGMASK : (c->mon->tagset[c->mon->seltags] & ~SPTAGMASK);
+ }
+ 
+ int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact) {
+@@ -3012,6 +3022,10 @@ void showhide(Client *c) {
+   if (!c)
+     return;
+   if (ISVISIBLE(c)) {
++    if ((c->tags & SPTAGMASK) && c->isfloating) {
++        c->x = c->mon->wx + (c->mon->ww / 2 - WIDTH(c) / 2);
++        c->y = c->mon->wy + (c->mon->wh / 2 - HEIGHT(c) / 2);
++    }
+     /* show clients top down */
+     XMoveWindow(dpy, c->win, c->x, c->y);
+     if ((!c->mon->lt[c->mon->sellt]->arrange || c->isfloating) &&
+@@ -3157,6 +3171,30 @@ void togglefloating(const Arg *arg) {
+   arrange(selmon);
+ }
+ 
++void togglescratch(const Arg *arg) {
++    Client *c;
++    unsigned int found = 0;
++    unsigned int scratchtag = SPTAG(arg->ui);
++    Arg sparg = {.v = scratchpads[arg->ui].cmd};
++
++    for (c = selmon->clients; c && !(found = c->tags & scratchtag); c = c->next);
++    if (found) {
++        unsigned int newtagset = selmon->tagset[selmon->seltags] ^ scratchtag;
++        if (newtagset) {
++            selmon->tagset[selmon->seltags] = newtagset;
++            focus(NULL);
++            arrange(selmon);
++        }
++        if (ISVISIBLE(c)) {
++            focus(c);
++            restack(selmon);
++        }
++    } else {
++        selmon->tagset[selmon->seltags] |= scratchtag;
++        spawn(&sparg);
++    }
++}
++
+ void togglefullscr(const Arg *arg) {
+   if (selmon->sel)
+     setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
