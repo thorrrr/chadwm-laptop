@@ -2052,10 +2052,7 @@ void manage(Window w, XWindowAttributes *wa) {
   c->x = MAX(c->x, c->mon->wx);
   c->y = MAX(c->y, c->mon->wy);
   c->bw = c->mon->borderpx;
-  if (c->x == c->mon->wx && c->y == c->mon->wy) { /* patch */
-    c->x = c->mon->mx + (c->mon->mw -  WIDTH(c)) / 2;
-    c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
-  }
+
   wc.border_width = c->bw;
   XConfigureWindow(dpy, w, CWBorderWidth, &wc);
   XSetWindowBorder(dpy, w, scheme[SchemeNorm][ColBorder].pixel);

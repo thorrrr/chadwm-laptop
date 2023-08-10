@@ -10,9 +10,9 @@
 super + F1
 	brave-nightly
 
-#Sublime Text
+#Firefox
 super + F2
-	subl
+	firefox
 
 #Inkscape
 super + F3
@@ -26,9 +26,9 @@ super + F4
 super + F5
     meld
 
-#Vlc
+#Sublime Text
 super + F6
-    vlc --video-on-top
+    subl
 
 #Virtualbox
 super + F7
@@ -38,9 +38,9 @@ super + F7
 super + F8
     thunar
 
-#Evolution
+#Logseq
 super + F9
-    evolution
+    logseq
 
 #Spotify
 super + F10
@@ -63,7 +63,7 @@ super + e
     subl
 
 #Browser
-super + w
+super + b
     brave-nightly
 
 #Conky-toggle
@@ -82,9 +82,9 @@ super + x
 super + r
     rofi-theme-selector
 
-#Urxvt
+#Kitty
 super + t
-    urxvt
+    kitty
 
 #Pavucontrol
 super + v
@@ -136,6 +136,10 @@ super + shift + s
 #################################################################
 # CONTROL + ALT KEYS
 #################################################################
+
+#arcolinux-application-glade
+ctrl + alt + h
+     arcolinux-app-glade
 
 #arcolinux-welcome-app
 ctrl + alt + w
@@ -209,7 +213,7 @@ ctrl + alt + Return
 ctrl + alt + t
     alacritty
 
-#Vivaldi
+#Brave
 ctrl + alt + v
     brave-nightly
 
