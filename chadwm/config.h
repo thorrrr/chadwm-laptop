@@ -107,10 +107,13 @@ static const int ulineall               = 0; /* 1 to show underline on all tags,
 typedef struct { const char *name; const void *cmd; } Sp;
 const char *spcmd1[] = {"st", "-n", "sp-btop", "-g", "144x41", "-e", "btop",   NULL };
 const char *spcmd2[] = {"st", "-n", "sp-fm",   "-g", "144x41", "-e", "ranger", NULL };
+const char *spcmd3[] = {"st", "-n", "sp-ncmpcpp",   "-g", "144x41", "-e", "ncmpcpp", NULL };
 static Sp scratchpads[] = {
     /* name          cmd  */
     {"sp-btop",     spcmd1},
     {"sp-fm",       spcmd2},
+    {"sp-ncmpcpp",  spcmd3},
+
 };
 
 /* END PATCH: scratchpads */
@@ -129,6 +132,7 @@ static const Rule rules[] = {
 /* PATCH: scratchpads */
     { NULL,       "sp-btop",  NULL,       SPTAG(0),     0,           1,           -1 },
     { NULL,       "sp-fm",    NULL,       SPTAG(1),     0,           1,           -1 },
+    { NULL,       "sp-ncmpcpp",    NULL,       SPTAG(2),     0,           1,           -1 },
 /* END PATCH: scratchpads */
 
 };
@@ -293,7 +297,8 @@ static const Key keys[] = {
  
 /* PATCH: scratchpads */
     { MODKEY,                           XK_y,      togglescratch,  {.ui = 0 } },
-     { MODKEY|ShiftMask,                XK_y,      togglescratch,  {.ui = 1 } },
+    { MODKEY|ShiftMask,                 XK_y,      togglescratch,  {.ui = 1 } },
+    { MODKEY|ShiftMask,                 XK_m,      togglescratch,  {.ui = 2 } },
 /* END PATCH: scratchpads */
 
 };
