@@ -86,7 +86,7 @@ static const char* pavucontrol[] = { "pavucontrol", NULL };
 
 static const Launcher launchers[] = {
     /* command     name to display */
-    { eww,           "數" },
+    { eww,           "󱓧" },
     { discord,       "ﱲ" },
     { telegram,      "" },
     { mintstick,     "虜" },
