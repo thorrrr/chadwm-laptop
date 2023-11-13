@@ -6,7 +6,7 @@
 # SUPER + FUNCTION KEYS
 #################################################################
 
-#Brave
+#Brave Nightly
 super + F1
 	brave-nightly
 
@@ -14,13 +14,13 @@ super + F1
 super + F2
 	firefox
 
-#Inkscape
+#LibreWolf
 super + F3
-    discord
+    librewolf
 
-#Gimp
+#Remmina
 super + F4
-    telegram
+    remmina
 
 #Meld
 super + F5
@@ -42,9 +42,9 @@ super + F8
 super + F9
     logseq
 
-#Spotify
+#HexChat
 super + F10
-    spotify
+    hexchat
 
 #Rofi Fullscreen
 super + F11
@@ -169,9 +169,9 @@ ctrl + alt + c
 ctrl + alt + g
     chromium -no-default-browser-check
 
-#Firefox
+#LibreWolf
 ctrl + alt + f
-     firefox
+     librewolf
 
 #Nitrogen
 ctrl + alt + i
