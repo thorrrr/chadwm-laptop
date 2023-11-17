@@ -40,11 +40,13 @@ static const int new_window_attach_on_end = 0; /*  1 means the new window will a
 static const char *fonts[]          = {"JetBrainsMono Nerd Font Mono:style:bold:size=12"};
 
 // theme
-#include "themes/onedark.h"
+//#include "themes/onedark.h"
 //#include "themes/catppuccin.h"
 //#include "themes/nord.h"
 //#include "themes/gruvchad.h"
 //#include "themes/dracula.h"
+#include "themes/tokyonight.h"
+
 
 static const char *colors[][3]      = {
     /*                     fg       bg      border */
@@ -78,19 +80,14 @@ static char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 //static char *tags[] = { "Web", "Chat", "Edit", "Meld", "Vb", "Mail", "Video", "Image", "Files", "Music" };
 //static char *tags[] = {"一", "二", "三", "四", "五", "六", "七", "八", "九", "十"};
 
-static const char* eww[] = { "eww", "open" , "eww", NULL };
 static const char* discord[] = { "discord", "open" , "discord", NULL };
-static const char* telegram[] = { "telegram-desktop", "open" , "telegram-desktop", NULL };
-static const char* mintstick[] = { "mintstick", "-m", "iso", NULL};
-static const char* pavucontrol[] = { "pavucontrol", NULL };
+static const char* logseq[] = { "logseq", "open" , "logseq", NULL };
 
 static const Launcher launchers[] = {
     /* command     name to display */
-    { eww,           "󱓧" },
     { discord,       "ﱲ" },
-    { telegram,      "" },
-    { mintstick,     "虜" },
-    { pavucontrol,   "墳" },
+    { logseq,      "󰷥" },
+       
 };
 
 static const int tagschemes[] = {
@@ -126,8 +123,6 @@ static const Rule rules[] = {
     /* class      instance    title       tags mask     iscentered   isfloating   monitor */
     { "Gimp",     NULL,       NULL,       0,            0,           0,           -1 },
     { "Firefox",  NULL,       NULL,       1 << 8,       0,           0,           -1 },
-    { "eww",      NULL,       NULL,       0,            0,           1,           -1 },
-    { "mintstick", NULL,      NULL,       0,            0,           0,           -1 },
 
 /* PATCH: scratchpads */
     { NULL,       "spterm",  NULL,       SPTAG(0),     0,           1,           -1 },

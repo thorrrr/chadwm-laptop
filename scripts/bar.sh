@@ -6,7 +6,7 @@
 interval=0
 
 # load colors
-. ~/.config/arco-chadwm/scripts/bar_themes/onedark
+. ~/.config/arco-chadwm/scripts/bar_themes/tokyonight
 
 cpu() {
   cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
