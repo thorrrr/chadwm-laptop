@@ -85,8 +85,8 @@ static const char* logseq[] = { "logseq", "open" , "logseq", NULL };
 
 static const Launcher launchers[] = {
     /* command     name to display */
-    { discord,       "ﱲ" },
-    { logseq,      "󰷥" },
+    { discord,       "" },
+    { logseq,      "" },
        
 };
 

@@ -16,12 +16,14 @@ cpu() {
 }
 
 pkg_updates() {
+  #updates=$({ timeout 20 doas xbps-install -un 2>/dev/null || true; } | wc -l) # void
   updates=$({ timeout 20 checkupdates 2>/dev/null || true; } | wc -l) # arch
+  # updates=$({ timeout 20 aptitude search '~U' 2>/dev/null || true; } | wc -l)  # apt (ubuntu, debian etc)
 
   if [ -z "$updates" ]; then
-    printf "  ^c$green^    Fully Updated"
+    printf "  ^c$green^     Fully Updated"
   else
-    printf "  ^c$green^    $updates"" updates"
+    printf "  ^c$green^     $updates"" updates"
   fi
 }
 
@@ -41,14 +43,15 @@ mem() {
 }
 
 wlan() {
-	case "$(cat /sys/class/net/wl*/operstate 2>/dev/null)" in
-	up) printf "^c$black^ ^b$blue^ ⌨  ^d^%s" " ^c$blue^Connected" ;;
-	down) printf "^c$black^ ^b$blue^ ⊞ ^d^%s" " ^c$blue^Disconnected" ;;
-	esac
+    # Check if a LAN cable is connected
+    if [[ -e /sys/class/net/eth0/carrier ]]; then
+        # Network status is shown only if a LAN cable is connected
+        printf "^c$green^ ^b$black^ ⌨ ^d^%s" " Connected"
+    fi
 }
 
 clock() {
-	#printf "^c$black^ ^b$darkblue^  "
+	#printf "^c$black^ ^b$darkblue^ 󱑆 "
 	printf "^c$black^^b$blue^ $(date '+%d/%m/%y %H:%M')  "
 }
 
@@ -57,5 +60,5 @@ while true; do
   [ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
   interval=$((interval + 1))
 
-  sleep 2 && xsetroot -name "$updates $(battery) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
+  sleep 3 && xsetroot -name "$updates $(battery) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
 done
