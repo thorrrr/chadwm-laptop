@@ -14,9 +14,9 @@ super + F1
 super + F2
 	firefox
 
-#LibreWolf
+#Vivaldi
 super + F3
-    librewolf
+    vivaldi
 
 #Remmina
 super + F4
