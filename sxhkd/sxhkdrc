@@ -6,17 +6,17 @@
 # SUPER + FUNCTION KEYS
 #################################################################
 
-#Brave Nightly
+#Vivaldi
 super + F1
-	brave-nightly
+	vivaldi-snapshot
 
 #Firefox
 super + F2
 	firefox
 
-#Vivaldi
+#Brave
 super + F3
-    vivaldi
+    brave-nightly
 
 #Remmina
 super + F4
@@ -64,7 +64,7 @@ super + e
 
 #Browser
 super + b
-    brave-nightly
+    vivaldi-snapshot
 
 #Conky-toggle
 super + c
@@ -217,9 +217,9 @@ ctrl + alt + Return
 ctrl + alt + t
     alacritty
 
-#Brave
+#Vivaldi
 ctrl + alt + v
-    brave-nightly
+    vivaldi-snapshot
 
 #Xfce4-appfinder
 ctrl + alt + a
