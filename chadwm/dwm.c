@@ -118,7 +118,10 @@ enum {
   TabNorm,
   SchemeBtnPrev,
   SchemeBtnNext,
-  SchemeBtnClose
+  SchemeBtnClose,
+  SchemeColor,
+  SchemeLayoutLS,
+  SchemeLayoutDS
 }; /* color schemes */
 enum {
   NetSupported,
@@ -1534,7 +1537,15 @@ void drawbar(Monitor *m) {
 
   	for (i = 0; i < LENGTH(launchers); i++)
 	{
-		w = TEXTW(launchers[i].name);
+  if (launchers[i].command == logseq){
+        drw_setscheme(drw, scheme[SchemeLayoutLS]);
+  }
+  if (launchers[i].command == discord){
+        drw_setscheme(drw, scheme[SchemeLayoutDS]);
+  }       
+
+	
+   w = TEXTW(launchers[i].name);
 		drw_text(drw, x, 0, w, bh, lrpad / 2, launchers[i].name, urg & 1 << i);
 		x += w;
 	}

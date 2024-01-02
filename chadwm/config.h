@@ -70,6 +70,9 @@ static const char *colors[][3]      = {
     [SchemeBtnPrev]    = { green,   black,  black },
     [SchemeBtnNext]    = { yellow,  black,  black },
     [SchemeBtnClose]   = { red,     black,  black },
+    [SchemeLayoutDS]   = { blue,   black,  black },
+    [SchemeLayoutLS]   = { green,   black,  black },
+
 };
 
 /* tagging */
