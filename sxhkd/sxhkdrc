@@ -8,7 +8,7 @@
 
 #Vivaldi
 super + F1
-	vivaldi-snapshot
+	vivaldi
 
 #Firefox
 super + F2
@@ -64,7 +64,7 @@ super + e
 
 #Browser
 super + b
-    vivaldi-snapshot
+    vivaldi
 
 #Conky-toggle
 super + c
@@ -173,9 +173,9 @@ ctrl + alt + c
 ctrl + alt + g
     chromium -no-default-browser-check
 
-#LibreWolf
+#Firefox
 ctrl + alt + f
-     librewolf
+     firefox
 
 #Nitrogen
 ctrl + alt + i
@@ -219,7 +219,7 @@ ctrl + alt + t
 
 #Vivaldi
 ctrl + alt + v
-    vivaldi-snapshot
+    vivaldi
 
 #Xfce4-appfinder
 ctrl + alt + a
@@ -309,6 +309,8 @@ alt + shift + u
 ctrl + shift + Escape
     xfce4-taskmanager
 
+ctrl + alt + n
+    dex --term alacritty /usr/share/applications/btop.desktop
 
 #################################################################
 #     SCREENSHOTS
