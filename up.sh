@@ -1,68 +1,25 @@
 #!/bin/bash
-#set -e
-##################################################################################################################
-# Author    : Dale Holden
-##################################################################################################################
-#
-#   DO NOT JUST RUN THIS. EXAMINE AND JUDGE. RUN AT YOUR OWN RISK.
-#
-##################################################################################################################
-#tput setaf 0 = black
-#tput setaf 1 = red
-#tput setaf 2 = green
-#tput setaf 3 = yellow
-#tput setaf 4 = dark blue
-#tput setaf 5 = purple
-#tput setaf 6 = cyan
-#tput setaf 7 = gray
-#tput setaf 8 = light blue
-##################################################################################################################
 
-# reset - commit your changes or stash them before you merge
-# git reset --hard - ArcoLinux alias - grh
-
-# reset - go back one commit - all is lost
-# git reset --hard HEAD~1
-
-# remove a file online but keep it locally
-# https://www.baeldung.com/ops/git-remove-file-without-deleting-it
-# git rm --cached file.txt
-
-# checking if I have the latest files from github
-echo "Checking for newer files online first"
+# Check for newer files online
+echo "Checking for newer files online first..."
 git pull
 
-#workdir=$(pwd)
-
-# Below command will backup everything inside the project folder
+# Add changes to staging area
 git add --all .
 
-# Give a comment to the commit if you want
-echo "####################################"
-echo "Write your commit comment!"
-echo "####################################"
-
+# Prompt user for commit message
+echo "Enter your commit message (press Enter for default):"
 read input
+commit_message=${input:-"Auto commit"}
 
-# Committing to the local repository with a message containing the time details and commit text
+# Commit changes
+git commit -m "$commit_message"
 
-git commit -m "$input"
-
-# Push the local files to github
-
-if grep -q main .git/config; then
-	echo "Using main"
-		git push -u origin main
+# Push changes to remote repository
+read -p "Do you want to push changes to remote repository? (y/n): " confirm
+if [[ $confirm =~ ^[Yy]$ ]]; then
+    git push origin $(git rev-parse --abbrev-ref HEAD)
+    echo "Changes pushed to remote repository."
+else
+    echo "Changes were not pushed to remote repository."
 fi
-
-if grep -q master .git/config; then
-	echo "Using master"
-		git push -u origin master
-fi
-
-# force the matter
-# git push -u origin master --force
-
-echo "################################################################"
-echo "###################    Git Push Done      ######################"
-echo "################################################################"
