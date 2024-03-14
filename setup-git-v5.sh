@@ -1,42 +1,67 @@
 #!/bin/bash
-#
-##################################################################################################################
-# Written to be used on 64 bits computers
-# Author 	: 	Dale Holden
-##################################################################################################################
-##################################################################################################################
-#
-#   DO NOT JUST RUN THIS. EXAMINE AND JUDGE. RUN AT YOUR OWN RISK.
-#
-##################################################################################################################
 
-# Problem solving commands
+# Function to check if the current directory is a Git repository or initialize a new one
+check_git_repository() {
+    if [ ! -d .git ]; then
+        git init
+    fi
+}
 
-# Read before using it.
-# https://www.atlassian.com/git/tutorials/undoing-changes/git-reset
-# git reset --hard orgin/master
-# ONLY if you are very sure and no coworkers are on your github.
+# Set your GitHub username and email
+github_username="thorrrr"
+github_email="dalestorage1@gmail.com"
 
-# Command that have helped in the past
-# Force git to overwrite local files on pull - no merge
-# git fetch all
-# git push --set-upstream origin master
-# git reset --hard orgin/master
+# Read GitHub token from a secure location
+github_token=$(cat ~/.github_token)
 
-project=$(basename `pwd`)
-echo "-----------------------------------------------------------------------------"
-echo "this is project https://github.com/thorrrr/"$project
-echo "-----------------------------------------------------------------------------"
-git config --global pull.rebase false
-git config --global user.name "thorrrr"
-git config --global user.email "dalestorage1@gmail.com"
-sudo git config --system core.editor nano
-git config --global push.default simple
+# Function to prompt user for input with default value
+prompt_with_default() {
+    local prompt="$1"
+    local default="$2"
+    local result
+    read -p "$prompt [$default]: " result
+    result="${result:-$default}"
+    echo "$result"
+}
 
-git remote set-url origin git@github.com:thorrrr/$project
+# Check if the current directory is a Git repository or initialize a new one
+check_git_repository
 
-echo "Everything set"
+# Prompt user for project name
+project=$(basename "$(pwd)")
 
-echo "################################################################"
-echo "###################    T H E   E N D      ######################"
-echo "################################################################"
+# Prompt user for GitHub repository name
+github_repo=$(prompt_with_default "Enter GitHub repository name" "$project")
+
+# Construct GitHub repository URL
+github_repo_url="git@github.com:$github_username/$github_repo.git"
+
+# Check if the repository already exists
+if ! curl -s "https://api.github.com/repos/$github_username/$github_repo" | grep -q "Not Found"; then
+    echo "Repository $github_repo already exists."
+else
+    # Create a new repository using the GitHub API
+    curl -X POST -H "Authorization: token $github_token" -d '{"name":"'$github_repo'"}' "https://api.github.com/user/repos"
+    echo "Repository $github_repo created."
+fi
+
+# Add placeholder file (e.g., README.md)
+echo "# $project" >> README.md
+git add README.md
+git commit -m "Initial commit"
+
+# Add GitHub remote and push changes to main branch
+git remote add origin "$github_repo_url"
+git branch -M main
+git push -u origin main
+
+echo "-----------------------------------------------------------------------------
+This project is configured for GitHub repository:
+User: $github_username
+Repository: $github_repo
+URL: $github_repo_url
+-----------------------------------------------------------------------------
+Everything set. Happy coding!
+################################################################
+###################    T H E   E N D      ######################
+################################################################"
