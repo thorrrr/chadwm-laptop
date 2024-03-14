@@ -20,8 +20,9 @@ else
     git commit -m "$commit_message"
 fi
 
-# Push changes to remote repository
-read -p "Do you want to push changes to remote repository? (y/n): " confirm
+# Push changes to remote repository (default choice is "Y")
+read -p "Do you want to push changes to remote repository? (Y/n): " confirm
+confirm=${confirm:-"Y"}  # Set default choice to "Y"
 if [[ $confirm =~ ^[Yy]$ ]]; then
     git push origin $(git rev-parse --abbrev-ref HEAD)
     echo "Changes pushed to remote repository."
