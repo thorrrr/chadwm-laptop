@@ -121,7 +121,9 @@ enum {
   SchemeBtnClose,
   SchemeColor,
   SchemeLayoutLS,
-  SchemeLayoutDS
+  SchemeLayoutDS,
+  SchemeLayoutTG,
+  SchemeLayoutVV
 }; /* color schemes */
 enum {
   NetSupported,
@@ -1542,7 +1544,13 @@ void drawbar(Monitor *m) {
   }
   if (launchers[i].command == discord){
         drw_setscheme(drw, scheme[SchemeLayoutDS]);
-  }       
+  }
+  if (launchers[i].command == telegram){
+        drw_setscheme(drw, scheme[SchemeLayoutTG]);
+  }
+  if (launchers[i].command == vivaldi){
+        drw_setscheme(drw, scheme[SchemeLayoutVV]);
+  }      
 
 	
    w = TEXTW(launchers[i].name);

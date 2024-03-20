@@ -16,7 +16,7 @@ super + F2
 
 #Brave
 super + F3
-    brave-nightly
+    brave
 
 #Remmina
 super + F4
@@ -30,9 +30,9 @@ super + F5
 super + F6
     subl
 
-#Virtualbox
+#Virt-Manager
 super + F7
-    virt-manager
+    Virt-Manager
 
 #Thunar
 super + F8

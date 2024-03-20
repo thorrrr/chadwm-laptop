@@ -70,8 +70,10 @@ static const char *colors[][3]      = {
     [SchemeBtnPrev]    = { green,   black,  black },
     [SchemeBtnNext]    = { yellow,  black,  black },
     [SchemeBtnClose]   = { red,     black,  black },
-    [SchemeLayoutDS]   = { blue,   black,  black },
+    [SchemeLayoutDS]   = { blue,    black,  black },
     [SchemeLayoutLS]   = { green,   black,  black },
+    [SchemeLayoutTG]   = { yellow,   black,  black },
+    [SchemeLayoutVV]   = { orange,    black,  black },
 
 };
 
@@ -85,11 +87,15 @@ static char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 
 static const char* discord[] = { "discord", "open" , "discord", NULL };
 static const char* logseq[] = { "logseq", "open" , "logseq", NULL };
+static const char* telegram[] = { "telegram-desktop", "open" , "telegram-desktop", NULL };
+static const char* vivaldi[] = { "vivaldi", NULL };
 
 static const Launcher launchers[] = {
     /* command     name to display */
     { discord,     "ﱲ" },
     { logseq,      "" },
+    { telegram,    "" },
+    { vivaldi,     "" },
        
 };
 
