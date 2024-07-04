@@ -10,13 +10,13 @@
 super + F1
 	vivaldi
 
-#Firefox
+#Chromium
 super + F2
-	firefox
+	chromium
 
-#Brave
+#Logseq
 super + F3
-    brave
+    logseq
 
 #Remmina
 super + F4
@@ -32,7 +32,7 @@ super + F6
 
 #Virt-Manager
 super + F7
-    Virt-Manager
+    virt-manager
 
 #Thunar
 super + F8

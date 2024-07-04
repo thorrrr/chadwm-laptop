@@ -71,33 +71,41 @@ static const char *colors[][3]      = {
     [SchemeBtnPrev]    = { green,   black,  black },
     [SchemeBtnNext]    = { yellow,  black,  black },
     [SchemeBtnClose]   = { red,     black,  black },
-    [SchemeLayoutDS]   = { blue,    black,  black },
-    [SchemeLayoutLS]   = { green,   black,  black },
-    [SchemeLayoutTG]   = { yellow,   black,  black },
-    [SchemeLayoutVV]   = { orange,    black,  black },
-
+    [SchemeLayoutFF]   = { orange,  black,  black },
+    [SchemeLayoutEW]   = { blue,    black,  black },
+    [SchemeLayoutDS]   = { red,     black,  black },
+    [SchemeLayoutTG]   = { green,   black,  black },
+    [SchemeLayoutMS]   = { pinky,   black,  black },
+    [SchemeLayoutPC]   = { orange,  black,  black },
+    [SchemeLayoutVV]   = { blue,    black,  black },
 };
 
 /* tagging */
-//static char *tags[] = { "", "", "", "", "", "", "", "", "", "" };
-static char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+static char *tags[] = { "", "", "", "", "", "", "", "", "", "" };
+//static char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 //static char *tags[] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" };
 //static char *tags[] = { "", "", "", "", "", "", "", "", "", "" };
 //static char *tags[] = { "Web", "Chat", "Edit", "Meld", "Vb", "Mail", "Video", "Image", "Files", "Music" };
 //static char *tags[] = {"一", "二", "三", "四", "五", "六", "七", "八", "九", "十"};
 
-static const char* discord[] = { "discord", "open" , "discord", NULL };
-static const char* logseq[] = { "logseq", "open" , "logseq", NULL };
-static const char* telegram[] = { "telegram-desktop", "open" , "telegram-desktop", NULL };
+static const char* firefox[] = { "firefox", NULL };
 static const char* vivaldi[] = { "vivaldi", NULL };
+static const char* eww[] = { "eww", "open" , "eww", NULL };
+static const char* discord[] = { "discord", "open" , "discord", NULL };
+static const char* telegram[] = { "telegram-desktop", "open" , "telegram-desktop", NULL };
+static const char* mintstick[] = { "mintstick", "-m", "iso", NULL};
+static const char* pavucontrol[] = { "pavucontrol", NULL };
 
 static const Launcher launchers[] = {
     /* command     name to display */
-    { discord,     "ﱲ" },
-    { logseq,      "" },
-    { telegram,    "" },
-    { vivaldi,     "" },
-       
+
+    { discord,       "ﱲ" },
+    { firefox,       "" },
+    { eww,           "數" },
+    { mintstick,     "虜" },
+    { pavucontrol,   "墳" },
+    { telegram,      "" },
+    { vivaldi,       "" },
 };
 
 static const int tagschemes[] = {
@@ -109,22 +117,6 @@ static const unsigned int ulinestroke   = 2; /* thickness / height of the underl
 static const unsigned int ulinevoffset  = 0; /* how far above the bottom of the bar the line should appear */
 static const int ulineall               = 0; /* 1 to show underline on all tags, 0 for just the active ones */
 
-/* PATCH: scratchpads */
-
-typedef struct { const char *name; const void *cmd; } Sp;
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "144x41", NULL };
-const char *spcmd2[] = {"st", "-n", "sp-fm",   "-g", "144x41", "-e", "lf", NULL };
-const char *spcmd3[] = {"st", "-n", "sp-ncmpcpp",   "-g", "144x41", "-e", "ncmpcpp", NULL };
-static Sp scratchpads[] = {
-    /* name          cmd  */
-    {"spterm",     spcmd1},
-    {"sp-fm",       spcmd2},
-    {"sp-ncmpcpp",  spcmd3},
-
-};
-
-/* END PATCH: scratchpads */
-
 static const Rule rules[] = {
     /* xprop(1):
      *	WM_CLASS(STRING) = instance, class
@@ -133,13 +125,8 @@ static const Rule rules[] = {
     /* class      instance    title       tags mask     iscentered   isfloating   monitor */
     { "Gimp",     NULL,       NULL,       0,            0,           0,           -1 },
     { "Firefox",  NULL,       NULL,       1 << 8,       0,           0,           -1 },
-
-/* PATCH: scratchpads */
-    { NULL,       "spterm",  NULL,       SPTAG(0),     0,           1,           -1 },
-    { NULL,       "sp-fm",    NULL,       SPTAG(1),     0,           1,           -1 },
-    { NULL,       "sp-ncmpcpp",    NULL,       SPTAG(2),     0,           1,           -1 },
-/* END PATCH: scratchpads */
-
+    { "eww",      NULL,       NULL,       0,            0,           1,           -1 },
+    { "mintstick", NULL,      NULL,       0,            0,           0,           -1 },
 };
 
 /* layout(s) */
@@ -214,6 +201,10 @@ static const Key keys[] = {
     { MODKEY,                           XK_k,       focusstack,     {.i = -1 } },
     { MODKEY,                           XK_i,       incnmaster,     {.i = +1 } },
     { MODKEY,                           XK_n,       incnmaster,     {.i = -1 } },
+
+    // shift view
+    { MODKEY,                           XK_Left,    shiftview,      {.i = -1 } },
+    { MODKEY,                           XK_Right,   shiftview,      {.i = +1 } },
 
     // change m,cfact sizes 
     { MODKEY,                           XK_h,       setmfact,       {.f = -0.05} },
@@ -307,12 +298,16 @@ static const Key keys[] = {
     TAGKEYS(                            XK_8,                       7)
     TAGKEYS(                            XK_9,                       8)
 
- 
-/* PATCH: scratchpads */
-    { MODKEY,                           XK_s,      togglescratch,  {.ui = 0 } },
-    { MODKEY|ShiftMask,                 XK_y,      togglescratch,  {.ui = 1 } },
-    { MODKEY|ShiftMask,                 XK_m,      togglescratch,  {.ui = 2 } },
-/* END PATCH: scratchpads */
+    // azerty keyboard (Belgium)
+    // TAGKEYS(                               XK_ampersand,                0)
+    // TAGKEYS(                               XK_eacute,                   1)
+    // TAGKEYS(                               XK_quotedbl,                 2)
+    // TAGKEYS(                               XK_apostrophe,               3)
+    // TAGKEYS(                               XK_parenleft,                4)
+    // TAGKEYS(                               XK_section,                  5)
+    // TAGKEYS(                               XK_egrave,                   6)
+    // TAGKEYS(                               XK_exclam,                   7)
+    // TAGKEYS(                               XK_ccedilla,                 8)
 
 };
 

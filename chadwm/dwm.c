@@ -604,7 +604,7 @@ void arrangemon(Monitor *m) {
   updatesystray();
   XMoveResizeWindow(dpy, m->tabwin, m->wx + m->gappov, m->ty, m->ww - 2 * m->gappov, th);
   XMoveWindow(dpy, m->tagwin, m->wx + m->gappov, m->by + (m->topbar ? (bh + m->gappoh) : (- (m->mh / scalepreview) - m->gappoh)));
-  strncpy(m->ltsymbol, m->lt[m->sellt]->symbol, sizeof m->ltsymbol);
+  snprintf(m->ltsymbol, sizeof(m->ltsymbol), "%s", m->lt[m->sellt]->symbol);
   if (m->lt[m->sellt]->arrange)
     m->lt[m->sellt]->arrange(m);
 }
@@ -2867,8 +2867,8 @@ void setlayout(const Arg *arg) {
     selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag] ^= 1;
   if (arg && arg->v)
     selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
-  strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol,
-          sizeof selmon->ltsymbol);
+  snprintf(selmon->ltsymbol, sizeof(selmon->ltsymbol), "%s", selmon->lt[selmon->sellt]->symbol);
+
   if (selmon->sel)
     arrange(selmon);
   else
@@ -3440,7 +3440,7 @@ void updatebarpos(Monitor *m) {
     m->by = -bh - m->gappoh;
 }
 
-void updateclientlist() {
+void updateclientlist(void) {
   Client *c;
   Monitor *m;
 
@@ -3595,7 +3595,7 @@ void updatesizehints(Client *c) {
 
 void updatestatus(void) {
   if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
-    strcpy(stext, "dwm-" VERSION);
+    strcpy(stext, "chadwm-" VERSION);
   drawbar(selmon);
   updatesystray();
 }
@@ -3884,7 +3884,7 @@ void zoom(const Arg *arg) {
 
 int main(int argc, char *argv[]) {
   if (argc == 2 && !strcmp("-v", argv[1]))
-    die("dwm-" VERSION);
+    die("chadwm-" VERSION);
   else if (argc != 1 && strcmp("-s", argv[1]))
     die("usage: dwm [-v]");
   if (!setlocale(LC_CTYPE, "") || !XSupportsLocale())
