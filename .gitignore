@@ -1,4 +1,10 @@
-setup-git-v5.sh
+.obsidian/cache
+.obsidian/workspace
+.trash/
+.obsidian/plugins/
+.DS_Store
+.workspace.json
+Dale-V1 (copy 1)/
+Dale-V1 (copy 2)/
 up.sh
-.ssh/
-README.md
+setup-git.sh
