@@ -5,7 +5,6 @@
 #include <X11/Xlib.h>
 #include <X11/Xft/Xft.h>
 #include <Imlib2.h>
-#include <X11/XF86keysym.h>
 
 #include "drw.h"
 #include "util.h"

@@ -18,7 +18,7 @@ static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int showtab            = showtab_auto;
 static const int toptab             = 1;        /* 0 means bottom tab */
-static const int floatbar           = 1;/* 1 means the bar will float(don't have padding),0 means the bar have padding */
+static const int floatbar           = 1;        /* 1 means the bar will float(don't have padding),0 means the bar have padding */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 5;        /* padding inside the bar */
 static const int vertpadbar         = 11;       /* padding inside the bar */
@@ -40,19 +40,20 @@ static const int new_window_attach_on_end = 0; /*  1 means the new window will a
 static const char *fonts[]          = {"JetBrainsMono Nerd Font Mono:style:bold:size=13"};
 
 // theme
-//#include "themes/onedark.h"
+#include "themes/onedark.h"
+//#include "themes/prime.h"
 //#include "themes/catppuccin.h"
-//#include "themes/nord.h"
-//#include "themes/gruvchad.h"
 //#include "themes/dracula.h"
-#include "themes/tokyonight.h"
+//#include "themes/gruvchad.h"
+//#include "themes/nord.h"
+//#include "themes/tokyonight.h"
 
 
 static const char *colors[][3]      = {
     /*                     fg       bg      border */
     [SchemeNorm]       = { gray3,   black,  gray2 },
     [SchemeSel]        = { gray4,   blue,   blue  },
-    [SchemeTitle]      = { white,   black,  black  }, // active window title
+    [SchemeTitle]      = { white,   black,  black }, // active window title
     [TabSel]           = { blue,    gray2,  black },
     [TabNorm]          = { gray3,   black,  black },
     [SchemeTag]        = { gray3,   black,  black },
@@ -65,7 +66,7 @@ static const char *colors[][3]      = {
     [SchemeTag7]       = { pink,    black,  black },
     [SchemeTag8]       = { orange,  black,  black },
     [SchemeTag9]       = { red,     black,  black },
-    [SchemeTag10]      = { blue,    black,  black },    
+    [SchemeTag10]      = { blue,    black,  black },
     [SchemeLayout]     = { green,   black,  black },
     [SchemeBtnPrev]    = { green,   black,  black },
     [SchemeBtnNext]    = { yellow,  black,  black },
@@ -187,11 +188,11 @@ static const Key keys[] = {
     /* modifier                         key         function        argument */
 
     // brightness and audio 
-    {0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol}},
-	{0,                       XF86XK_AudioMute, spawn, {.v = mutevol }},
-	{0,                       XF86XK_AudioRaiseVolume, spawn, {.v = upvol}},
-	{0,				XF86XK_MonBrightnessUp,		spawn,	{.v = light_up}},
-	{0,				XF86XK_MonBrightnessDown,	spawn,	{.v = light_down}},
+    {0,             XF86XK_AudioLowerVolume,    spawn, {.v = downvol}},
+	{0,             XF86XK_AudioMute, spawn,    {.v = mutevol }},
+	{0,             XF86XK_AudioRaiseVolume,    spawn, {.v = upvol}},
+	{0,				XF86XK_MonBrightnessUp,     spawn,	{.v = light_up}},
+	{0,				XF86XK_MonBrightnessDown,   spawn,	{.v = light_down}},
 
     // screenshot fullscreen and cropped
     {MODKEY|ControlMask,                XK_u,       spawn,
@@ -212,7 +213,7 @@ static const Key keys[] = {
     { MODKEY,                           XK_j,       focusstack,     {.i = +1 } },
     { MODKEY,                           XK_k,       focusstack,     {.i = -1 } },
     { MODKEY,                           XK_i,       incnmaster,     {.i = +1 } },
-    { MODKEY,                           XK_d,       incnmaster,     {.i = -1 } },
+    { MODKEY,                           XK_n,       incnmaster,     {.i = -1 } },
 
     // change m,cfact sizes 
     { MODKEY,                           XK_h,       setmfact,       {.f = -0.05} },
@@ -224,7 +225,7 @@ static const Key keys[] = {
 
     { MODKEY|ShiftMask,                 XK_j,       movestack,      {.i = +1 } },
     { MODKEY|ShiftMask,                 XK_k,       movestack,      {.i = -1 } },
-    { MODKEY|ShiftMask,                 XK_Return,  zoom,           {0} },
+    { MODKEY|ControlMask|ShiftMask,     XK_Return,  zoom,           {0} },
     { MODKEY,                           XK_Tab,     view,           {0} },
 
     // overall gaps
@@ -251,15 +252,23 @@ static const Key keys[] = {
 
     { MODKEY|ControlMask|ShiftMask,     XK_d,       defaultgaps,    {0} },
 
-    // layout
-    { MODKEY,                           XK_t,       setlayout,      {.v = &layouts[0]} },
-    { MODKEY|ShiftMask,                 XK_f,       setlayout,      {.v = &layouts[1]} },
-    { MODKEY,                           XK_m,       setlayout,      {.v = &layouts[2]} },
-    { MODKEY|ControlMask,               XK_g,       setlayout,      {.v = &layouts[10]} },
-    { MODKEY|ControlMask|ShiftMask,     XK_t,       setlayout,      {.v = &layouts[13]} },
+    // layout (preferences = no 1,3,4,8,9)
+    { MODKEY|ControlMask,               XK_F1,       setlayout,      {.v = &layouts[0]} },
+    { MODKEY|ControlMask,               XK_F2,       setlayout,      {.v = &layouts[2]} },
+    { MODKEY|ControlMask,               XK_F3,       setlayout,      {.v = &layouts[5]} },
+    { MODKEY|ControlMask,               XK_F4,       setlayout,      {.v = &layouts[6]} },
+    { MODKEY|ControlMask,               XK_F5,       setlayout,      {.v = &layouts[7]} },
+    { MODKEY|ControlMask,               XK_F6,       setlayout,      {.v = &layouts[11]} },
+    { MODKEY|ControlMask,               XK_F7,       setlayout,      {.v = &layouts[0]} },
+    { MODKEY|ControlMask,               XK_F8,       setlayout,      {.v = &layouts[0]} },
+    { MODKEY|ControlMask,               XK_F9,       setlayout,      {.v = &layouts[0]} },
+    { MODKEY|ControlMask,               XK_F10,      setlayout,      {.v = &layouts[0]} },
+    { MODKEY|ControlMask,               XK_F11,      setlayout,      {.v = &layouts[0]} },
+    { MODKEY|ControlMask,               XK_F12,      setlayout,      {.v = &layouts[0]} },
+
     { MODKEY,                           XK_space,   setlayout,      {0} },
-    { MODKEY|ControlMask,               XK_comma,   cyclelayout,    {.i = -1 } },
-    { MODKEY|ControlMask,               XK_period,  cyclelayout,    {.i = +1 } },
+    { MODKEY|ControlMask,               XK_p,       cyclelayout,    {.i = -1 } },
+    { MODKEY|ControlMask,               XK_m,       cyclelayout,    {.i = +1 } },
     { MODKEY,                           XK_0,       view,           {.ui = ~0 } },
     { MODKEY|ShiftMask,                 XK_0,       tag,            {.ui = ~0 } },
     { MODKEY,                           XK_comma,   focusmon,       {.i = -1 } },
@@ -283,8 +292,8 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,                 XK_r,       restart,           {0} },
 
     // hide & restore windows
-    { MODKEY,                           XK_e,       hidewin,        {0} },
-    { MODKEY|ShiftMask,                 XK_e,       restorewin,     {0} },
+    { MODKEY,                           XK_i,       hidewin,        {0} },
+    { MODKEY|ShiftMask,                 XK_i,       restorewin,     {0} },
 
     // qwerty keyboard
 
