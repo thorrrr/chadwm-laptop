@@ -12,7 +12,7 @@ super + F1
 
 #Chromium
 super + F2
-	chromium
+	brave-browser-beta
 
 #Logseq
 super + F3
@@ -64,15 +64,11 @@ super + e
 
 #Browser
 super + b
-    vivaldi
+    brave-browser-beta
 
 #Conky-toggle
 super + c
     conky-toggle
-
-#Htop
-#super + h
-#    urxvt 'htop task manager' -e htop
 
 #archlinux-logout
 super + x
@@ -80,15 +76,19 @@ super + x
 
 #powermenu
 super + shift + x
-    ~/.config/arco-chadwm/powermenu/powermenu
+    arcolinux-powermenu
+
+#nlogout
+alt + shift + x
+    nlogout
 
 #Rofi theme selector
 super + r
     rofi-theme-selector
 
-#Kitty
-super + t
-    kitty
+#Obsidian
+super + o
+    obsidian
 
 #Pavucontrol
 super + v
@@ -127,6 +127,10 @@ super + shift + KP_Enter
 #dmenu
 super + shift + d
 	dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
+
+#dmenu
+super + p
+    dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
 
 #rofi large
 super + d
@@ -308,6 +312,9 @@ alt + shift + u
 #Xcfe4-TaskManager
 ctrl + shift + Escape
     xfce4-taskmanager
+
+ctrl + alt + End
+    dex --term alacritty /usr/share/applications/btop.desktop
 
 ctrl + alt + n
     dex --term alacritty /usr/share/applications/btop.desktop
