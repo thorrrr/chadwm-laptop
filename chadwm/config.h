@@ -110,34 +110,32 @@ static const unsigned int ulinevoffset  = 0; /* how far above the bottom of the 
 static const int ulineall               = 0; /* 1 to show underline on all tags, 0 for just the active ones */
 
 /* PATCH: scratchpads */
-
 typedef struct { const char *name; const void *cmd; } Sp;
-const char *spcmd1[] = {"st", "-n", "spterm", "-g", "144x41", NULL };
-const char *spcmd2[] = {"st", "-n", "sp-fm",   "-g", "144x41", "-e", "lf", NULL };
-const char *spcmd3[] = {"st", "-n", "sp-ncmpcpp",   "-g", "144x41", "-e", "ncmpcpp", NULL };
+const char *spcmd1[] = {"alacritty", "--class", "spterm", "--config-file", "/home/dale/.config/alacritty/alacritty-scratchpad.toml", NULL };
+const char *spcmd2[] = {"alacritty", "--class", "sp-fm", "--config-file", "/home/dale/.config/alacritty/alacritty-scratchpad.toml", "-e", "curseradio", NULL };
+const char *spcmd3[] = {"alacritty", "--class", "sp-ncmpcpp", "--config-file", "/home/dale/.config/alacritty/alacritty-scratchpad.toml", "-e", "ncmpcpp", NULL };
+
 static Sp scratchpads[] = {
     /* name          cmd  */
     {"spterm",     spcmd1},
     {"sp-fm",       spcmd2},
     {"sp-ncmpcpp",  spcmd3},
-
 };
-
 /* END PATCH: scratchpads */
+
 
 static const Rule rules[] = {
     /* xprop(1):
-     *	WM_CLASS(STRING) = instance, class
-     *	WM_NAME(STRING) = title
+     *  WM_CLASS(STRING) = instance, class
+     *  WM_NAME(STRING) = title
      */
     /* class      instance    title       tags mask     iscentered   isfloating   monitor */
     { "Gimp",     NULL,       NULL,       0,            0,           0,           -1 },
     { "Firefox",  NULL,       NULL,       1 << 8,       0,           0,           -1 },
-
 /* PATCH: scratchpads */
-    { NULL,       "spterm",  NULL,       SPTAG(0),     0,           1,           -1 },
-    { NULL,       "sp-fm",    NULL,       SPTAG(1),     0,           1,           -1 },
-    { NULL,       "sp-ncmpcpp",    NULL,       SPTAG(2),     0,           1,           -1 },
+    { "spterm",     NULL,       NULL,       SPTAG(0),    1,           -1 },
+    { "sp-fm",      NULL,       NULL,       SPTAG(1),    1,           -1 },
+    { "sp-ncmpcpp", NULL,       NULL,       SPTAG(2),    1,           -1 },
 /* END PATCH: scratchpads */
 
 };
