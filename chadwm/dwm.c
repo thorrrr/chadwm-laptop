@@ -1548,7 +1548,7 @@ void drawbar(Monitor *m) {
   if (launchers[i].command == telegram){
         drw_setscheme(drw, scheme[SchemeLayoutTG]);
   }
-  if (launchers[i].command == vivaldi){
+  if (launchers[i].command == brave_beta){
         drw_setscheme(drw, scheme[SchemeLayoutVV]);
   }      
 

@@ -89,14 +89,14 @@ static char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 static const char* discord[] = { "discord", "open" , "discord", NULL };
 static const char* logseq[] = { "logseq", "open" , "logseq", NULL };
 static const char* telegram[] = { "telegram-desktop", "open" , "telegram-desktop", NULL };
-static const char* vivaldi[] = { "vivaldi", NULL };
+static const char* brave_beta[] = { "brave-browser-beta", NULL };
 
 static const Launcher launchers[] = {
     /* command     name to display */
     { discord,     "ﱲ" },
     { logseq,      "" },
     { telegram,    "" },
-    { vivaldi,     "" },
+    { brave_beta,  "\uf26b" },
        
 };
 
@@ -307,7 +307,7 @@ static const Key keys[] = {
 
  
 /* PATCH: scratchpads */
-    { MODKEY,                           XK_s,      togglescratch,  {.ui = 0 } },
+    { MODKEY,                           XK_a,      togglescratch,  {.ui = 0 } },
     { MODKEY|ShiftMask,                 XK_y,      togglescratch,  {.ui = 1 } },
     { MODKEY|ShiftMask,                 XK_m,      togglescratch,  {.ui = 2 } },
 /* END PATCH: scratchpads */

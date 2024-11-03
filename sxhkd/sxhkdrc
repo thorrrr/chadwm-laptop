@@ -86,9 +86,9 @@ alt + shift + x
 super + r
     rofi-theme-selector
 
-#Obsidian
-super + o
-    obsidian
+#Kitty
+super + k
+    kitty
 
 #Pavucontrol
 super + v
